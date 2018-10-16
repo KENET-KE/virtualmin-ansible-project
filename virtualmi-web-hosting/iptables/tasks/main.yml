@@ -1,0 +1,45 @@
+---
+# tasks file for iptables
+# - include_vars: '{{ item }}'
+#   with_first_found:
+#     - files:
+#         - '{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
+#       paths: '../vars'
+
+- name: ensure iptables rpm is installed
+  yum:
+    name: '{{ item }}'
+    state: 'installed'
+  with_items: 
+    - 'iptables'
+    - 'iptables-services'
+    - 'libselinux-python'
+
+- name: ensure the firewall is enabled and will start on boot
+  service:
+    name: iptables
+    state: started
+    enabled: yes
+
+- name: create iptables IPV4 configuration
+  template:
+    src: iptables.j2
+    dest: /etc/sysconfig/iptables
+    owner: root
+    group: root
+    mode: 0600
+
+- name: create iptables IPV6 configuration
+  template:
+    src: iptables6.j2
+    dest: /etc/sysconfig/ip6tables
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Start and enable iptables service
+  systemd: daemon_reload=yes name=iptables.service state=started enabled=yes
+
+# - name: start and enable ip6tables service
+#   systemd: daemon_reload=yes name=ip6tables.service state=started enabled=yes
+

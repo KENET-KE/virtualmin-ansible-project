@@ -1,0 +1,60 @@
+---
+# tasks file for web-virtualmin
+
+# update the server
+
+- name: update the system
+  yum:
+    name: "*"
+    state: latest
+
+# install perl and network tools
+- name: Install perl and net-tools
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - perl
+    - net-tools
+
+
+
+# Install epel repository
+
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: latest
+
+# Download virtualmin to temp dir
+
+- name: download script.sh file to tmp dir
+  get_url:
+    url: http://software.virtualmin.com/gpl/scripts/install.sh
+    dest: /tmp/
+    mode: "a+x"
+
+# execute virtualmin installation script
+
+- name: execute script.sh script
+  shell: /tmp/install.sh
+
+# Configure and enable firewalld
+
+# - firewalld:
+#         port: "{{ item }}"
+#         permanent: true
+#         state: enabled
+#       with_items:
+#       - [ '500/udp',  '4500/udp']
+
+- name: Start and enable httpd service
+  systemd: daemon_reload=yes name=httpd.service state=started enabled=yes
+
+
+
+
+
+
+
+
+

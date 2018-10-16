@@ -1,0 +1,29 @@
+---
+# Install Linux Malware Detect (LMD) with ClamAV as Antivirus Engine
+
+# Download MalDet to temp dir
+
+
+- name: Download maldet to tmp directory
+  get_url: url={{ maldeturl }} dest={{ download_dir }}/{{ maldet }}.tar.gz
+
+- name: Unpack Maldet files
+  shell: cd {{ download_dir }} && tar -xzvf {{ maldet  }}.tar.gz creates={{ download_dir }}/{{ maldet  }}
+  register: new_dir
+- name: Rename extract directory to maldetect
+  shell: mv /tmp/maldetect-*  /tmp/maldetect
+  when: new_dir.changed == True
+
+- name: Change to Maldet directory and execute installation script
+  shell: cd {{ download_dir }}{{ maldet  }} && ./install.sh
+  
+- name: add the necessary file j2 templates with editable variables to the config directory (/usr/local/maldetect/) 
+  template:
+    src: templates/{{ item.src }}
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: conf.maldet.j2,     dest: "/usr/local/maldetect/conf.maldet" }
+
+- name: update MalDet
+  shell: maldet -d && maldet -u
+

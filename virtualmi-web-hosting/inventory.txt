@@ -1,0 +1,2 @@
+[virtualmin_instance]
+xx.xx.xx.xx

@@ -1,0 +1,9 @@
+---
+# defaults file for iptables
+
+iptables_rpms:
+    - 'iptables'
+    - 'iptables-services'
+    - 'libselinux-python'
+
+Institution_prefix: "XX.XX.XX.0/24"

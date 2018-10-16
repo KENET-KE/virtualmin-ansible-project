@@ -1,0 +1,6 @@
+---
+testing: 0
+csf_sec_ssh_port: 22 # Default allow ssh port only 
+Listen_address: 197.137.64.214 # VM IP address
+
+Institution_prefix: "XX.XX.XX.0/24"

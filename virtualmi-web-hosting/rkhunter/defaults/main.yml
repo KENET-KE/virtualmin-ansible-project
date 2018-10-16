@@ -1,0 +1,50 @@
+---
+# defaults file for rkhunter
+
+# If this option is set to '1', it specifies that the mirrors file
+# ('mirrors.dat'), which is used when the '--update' and '--versioncheck'
+# options are used, is to be rotated. Rotating the entries in the file allows
+# a basic form of load-balancing between the mirror sites whenever the above
+# options are used.
+
+rkhunter_rotate_mirrors: 1
+
+# If this option is set to '1', it specifies that when the '--update' option is
+# used, then the mirrors file is to be checked for updates as well. If the
+# current mirrors file contains any local mirrors, these will be prepended to
+# the updated file. If this option is set to '0', the mirrors file can only be
+# updated manually. This may be useful if only using local mirrors.
+
+rkhunter_update_mirrors: 1
+
+# The MIRRORS_MODE option tells rkhunter which mirrors are to be used when
+# the '--update' or '--versioncheck' command-line options are given.
+# Possible values are:
+#     0 - use any mirror
+#     1 - only use local mirrors
+#     2 - only use remote mirrors
+#
+
+rkhunter_mirrors_mode: 0
+
+# Email a message to this address if a warning is found when the system is
+# being checked. Multiple addresses may be specified simply be separating
+# them with a space.
+
+rkhunter_warning_mail_address: "mnjau@kenet.or.ke"
+
+# This option specifies the mail command to use if MAIL-ON-WARNING is set.
+
+rkhunter_send_mail_command: "mail -s \"[rkhunter] Warnings found for ${HOST_NAME}\""
+
+# Set this option to '1' if the log file is to be appended to whenever rkhunter
+# is run. A value of '0' will cause a new log file to be created whenever the
+# program is run.
+
+rkhunter_append_log: 1
+
+
+rkhunter_report_mail_address: "mnjau@kenet.or.ke"
+rkhunter_diag_scan: "no"
+rkhunter_allow_ssh_protocol_v1: 0
+rkhunter_allow_ssh_root_login: "no"

@@ -1,0 +1,22 @@
+---
+# defaults file for MalDet
+maldeturl: "http://www.rfxn.com/downloads/maldetect-current.tar.gz"
+download_dir: "/tmp/"
+maldet: "maldetect"
+
+# Enable email sending Disable==0 enable==1
+email_alert: 1
+
+# Specify the email address to send scan reports to
+
+your_email: "mnjau@kenet.or.ke"
+
+# The default quarantine action for malware hits
+# [0 = alert only, 1 = move to quarantine & alert]
+
+quarantine_hits: 1
+
+# use ClamAV engine
+# [ 0 = disabled, 1 = enabled ]
+
+scan_clamscan: 1

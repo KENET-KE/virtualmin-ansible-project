@@ -1,0 +1,13 @@
+---
+
+- hosts: virtualmin_instance 
+  gather_facts: yes
+  become: yes
+  roles:
+    - virtualmin   
+    - iptables
+    - csf
+    - modsecurity 
+    - MalDet
+    - rkhunter
+

@@ -1,0 +1,56 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:00]
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m state --state NEW -j DROP
+iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j DROP
+iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP
+iptables -A INPUT -f -j DROP
+
+## Allow all web traffic
+
+iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+
+# Allow full access for KENET office IPS and Institution Prefix
+
+iptables -A INPUT -s 41.89.0.128/25 -j ACCEPT
+iptables -A INPUT -s 41.204.162.0/24 -j ACCEPT
+iptables -A INPUT -s 197.136.2.0/24 -j ACCEPT
+iptables -A INPUT -s {{ Institution_prefix }} -j ACCEPT
+
+## Allow KENET office IPS and Institution prefix for ICMP
+
+iptables -A INPUT -s 41.89.0.128/25 -p icmp -j ACCEPT
+iptables -A INPUT -s 41.204.162.0/24 -p icmp -j ACCEPT
+iptables -A INPUT -s 197.136.2.0/24 -p icmp -j ACCEPT
+iptables -A INPUT -s {{ Institution_prefix }} -p icmp -j ACCEPT
+
+iptables -A INPUT -j REJECT --reject-with icmp-host-prohibited
+iptables -A INPUT -j LOG
+iptables -A INPUT -j DROP
+
+iptables -A FORWARD -j REJECT --reject-with icmp-host-prohibited
+iptables -A FORWARD -j LOG
+
+## Allow http & https outbound
+
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+
+## Allow access to KENET DNS servers
+
+iptables -A OUTPUT -d 41.89.1.4/32 -p tcp -m state --state NEW -m multiport --dports 53 -j ACCEPT
+iptables -A OUTPUT -d 41.89.1.4/32 -p udp -m state --state NEW -m multiport --dports 53 -j ACCEPT
+iptables -A OUTPUT -d 41.204.164.3/32 -p tcp -m state --state NEW -m multiport --dports 53 -j ACCEPT
+iptables -A OUTPUT -d 41.204.164.3/32 -p udp -m state --state NEW -m multiport --dports 53 -j ACCEPT
+
+
+## Allow outbound ping
+
+-A OUTPUT -p icmp -j ACCEPT
+
+
+COMMIT
