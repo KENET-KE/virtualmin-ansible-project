@@ -46,7 +46,7 @@ rkhunter_warning_mail_address: "username@domain"
 
 <!-- Configure VM for ssh using public keys
  -->
-
+# Generate ans copy ssh keys
  ssh-keygen ## generate public keys
  ssh-copy-id -i ~/.ssh/id_rsa.pub root@remote_ip 
 <!-- Edit the inventory file and update the Installation VM IP
@@ -57,5 +57,5 @@ rkhunter_warning_mail_address: "username@domain"
 
 [virtualmin_instance]
 XX.XX.XX.XX
-<!-- Run the Ansible main playbook  -->
-# ansible-playbook virtualmin.yaml -i inventory.txt
+# <!-- Run the Ansible main playbook  -->
+ ansible-playbook virtualmin.yaml -i inventory.txt
