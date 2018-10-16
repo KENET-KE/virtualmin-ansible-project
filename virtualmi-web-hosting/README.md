@@ -47,13 +47,13 @@ rkhunter_warning_mail_address: "username@domain"
 <!-- Configure VM for ssh using public keys
  -->
 
-# ssh-keygen ## generate public keys
-# ssh-copy-id -i ~/.ssh/id_rsa.pub root@remote_ip 
+ ssh-keygen ## generate public keys
+ ssh-copy-id -i ~/.ssh/id_rsa.pub root@remote_ip 
 <!-- Edit the inventory file and update the Installation VM IP
  -->
-# vi inventory.txt
+ vi inventory.txt
 
-# cat inventory.txt 
+ cat inventory.txt 
 
 [virtualmin_instance]
 XX.XX.XX.XX
