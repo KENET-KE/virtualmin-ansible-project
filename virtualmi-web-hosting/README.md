@@ -13,14 +13,14 @@
 
 # mandatory variables
 
-<!-- 	iptables default variables
- --><!-- 	update file: /iptables/default/main.yml -->
+# iptables default variables
+ --><!-- 	update file: /iptables/default/main.yml
 
 		Institution_prefix: "XXX.XX.XX.0/24" ## Replace this ip with institution/organisation browsing prefix
 
-<!-- - populate the ssh listen on address and port (CSF) role && enable csf parameter.
+# populate the ssh listen on address and port (CSF) role && enable csf parameter.
 - file: /csf/defaults/main.yml
- -->
+
 		---
 		testing: 0
 		csf_sec_ssh_port: 22
@@ -29,18 +29,14 @@
 
 
 
-<!-- Maldet email -->
-
-# Specify the email address to send scan reports to
+# Specify mMaldet email address to send scan reports to
 
 your_email: "username@domain"
 
 
-<!-- rkhunter email
- -->
-<!-- # Email a message to this address if a warning is found when the system is
-# being checked. Multiple addresses may be specified simply be separating
-# them with a space. -->
+# rkhunter email
+
+Email a message to this address if a warning is found when the system isbeing checked. Multiple addresses may be specified simply be separatingthem with a space.
 
 rkhunter_warning_mail_address: "username@domain"
 
